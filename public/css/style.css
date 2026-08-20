@@ -100,6 +100,14 @@ main { flex: 1; }
 .logo-ca  { color: #7B4F2E; }
 .logo-melia { color: #A89040; }
 
+/* Image logo */
+.logo-img { height: 34px; width: auto; display: block; }
+.logo-img-login { height: 62px; width: auto; display: block; margin: 0 auto 0.25rem; }
+
+@media (max-width: 480px) {
+  .logo-img { height: 28px; }
+}
+
 .nav { display: flex; align-items: center; gap: .25rem; }
 
 .nav-link {
