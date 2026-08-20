@@ -45,8 +45,12 @@
   <script src="/js/app.js"></script>
   <script>
     // Redirect if already logged in
-    fetch('/api/feriantes/check').then(r => r.json()).then(d => {
-      if (d.authenticated) window.location.href = '/mi-cuenta.html';
+    Promise.all([
+      fetch('/api/feriantes/check').then(r => r.json()),
+      fetch('/api/admin/check').then(r => r.json())
+    ]).then(([feriante, admin]) => {
+      if (admin.authenticated) window.location.href = '/admin/';
+      else if (feriante.authenticated) window.location.href = '/mi-cuenta.html';
     });
 
     document.getElementById('login-form').addEventListener('submit', async (e) => {
@@ -61,6 +65,7 @@
       const password = document.getElementById('password').value;
 
       try {
+        // Try feriante login first
         const res = await fetch('/api/feriantes/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -69,12 +74,25 @@
         const data = await res.json();
         if (data.success) {
           window.location.href = '/mi-cuenta.html';
-        } else {
-          errDiv.textContent = data.error || 'Email o contraseña incorrectos.';
-          errDiv.classList.remove('hidden');
-          btn.disabled = false;
-          btn.textContent = 'Ingresar';
+          return;
         }
+
+        // Fallback: try admin login using the email field as username
+        const adminRes = await fetch('/api/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: email, password })
+        });
+        const adminData = await adminRes.json();
+        if (adminData.success) {
+          window.location.href = '/admin/';
+          return;
+        }
+
+        errDiv.textContent = data.error || 'Email o contraseña incorrectos.';
+        errDiv.classList.remove('hidden');
+        btn.disabled = false;
+        btn.textContent = 'Ingresar';
       } catch {
         errDiv.textContent = 'Error de conexión. Intentá nuevamente.';
         errDiv.classList.remove('hidden');

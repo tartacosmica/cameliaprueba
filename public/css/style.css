@@ -851,6 +851,27 @@ body.login-body {
   .stats-grid { grid-template-columns: 1fr 1fr; }
   .admin-main { padding: 1.25rem 1rem; }
   .a-modal-content { padding: 1.25rem; }
+
+  /* Admin header */
+  .admin-header { height: auto; padding: .75rem 1rem; flex-wrap: wrap; gap: .5rem; }
+  .admin-header-left { flex: 1; min-width: 0; }
+  .admin-header > div:last-child { gap: .5rem; }
+  .admin-header .btn-sm { padding: .3rem .65rem; font-size: .75rem; }
+
+  /* Tabs scroll horizontally */
+  .tabs { overflow-x: auto; gap: 0; padding-bottom: 0; -webkit-overflow-scrolling: touch; flex-wrap: nowrap; }
+  .tab-btn { white-space: nowrap; flex-shrink: 0; padding: .5rem .875rem; font-size: .8rem; }
+
+  /* Panel header stacks */
+  .panel-header { flex-direction: column; align-items: flex-start; gap: .75rem; }
+
+  /* Stat cards 2 columns */
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .stat-value { font-size: 1.6rem; }
+
+  /* Modal full height on mobile */
+  .a-modal { padding: .5rem; align-items: flex-end; }
+  .a-modal-content { border-bottom-left-radius: 0; border-bottom-right-radius: 0; max-height: 92vh; }
 }
 
 @media (max-width: 768px) {
@@ -897,4 +918,14 @@ body.login-body {
   .welcome-section { padding: 1.5rem 0; }
   .dashboard { padding: 1.5rem 0; }
   .container { padding: 0 1rem; }
+
+  /* Admin: stack header actions below logo */
+  .admin-header { flex-direction: column; align-items: flex-start; height: auto; padding: .75rem 1rem; gap: .5rem; }
+  .admin-header > div:last-child { width: 100%; justify-content: flex-end; }
+
+  /* Admin stats: 2 columns */
+  .stats-grid { grid-template-columns: 1fr 1fr; gap: .75rem; }
+  .stat-card { padding: .875rem 1rem; }
+  .stat-value { font-size: 1.5rem; }
+  .stat-label { font-size: .7rem; }
 }
