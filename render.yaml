@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: feria-la-camelia
+    env: node
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: MONGODB_URI
+        sync: false          # Lo ingresás manualmente en el dashboard de Render
+      - key: SESSION_SECRET
+        generateValue: true  # Render genera uno automáticamente
+      - key: NODE_ENV
+        value: production

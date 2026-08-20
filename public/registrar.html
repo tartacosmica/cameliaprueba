@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crear cuenta — Feria La Camelia</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Zilla+Slab:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header class="header">
+    <div class="container header-inner">
+      <a href="/" class="logo">
+        <span class="logo-icon">�</span>
+        <div class="logo-wordmark">
+          <span class="logo-feria">Feria</span>
+          <span class="logo-camelia-line">la <span class="logo-ca">Ca</span><span class="logo-melia">melia</span></span>
+        </div>
+      </a>
+      <nav class="nav" id="main-nav">
+        <a href="/" class="nav-link">Inicio</a>
+        <a href="/mi-cuenta.html" class="nav-link" id="nav-micuenta" style="display:none">Mi Cuenta</a>
+        <button class="btn-nav-link" id="nav-logout-btn" style="display:none">Cerrar Sesión</button>
+        <a href="/registrar.html" class="nav-link active" id="nav-registrarse">Registrarse</a>
+        <a href="/login.html" class="nav-link" id="nav-ingresar">Ingresar</a>
+        <a href="/admin/" class="nav-link nav-admin">Admin</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="page-header">
+        <h1>Crear mi cuenta</h1>
+        <p>Registrá tu emprendimiento una sola vez y luego inscribite a todas las ferias que quieras.</p>
+        <p style="margin-top:.5rem;font-size:.9rem;color:var(--gray-500)">
+          ¿Ya tenés cuenta? <a href="/login.html">Iniciá sesión</a>
+        </p>
+      </div>
+
+      <form id="registro-form" class="form-card" novalidate>
+
+        <!-- Datos del emprendimiento -->
+        <div class="form-section">
+          <h2 class="form-section-title">📦 Tu Emprendimiento</h2>
+          <div class="form-group">
+            <label for="nombre_emprendimiento">Nombre del emprendimiento *</label>
+            <input type="text" id="nombre_emprendimiento" placeholder="Ej: Artesanías María" maxlength="120" required>
+          </div>
+          <div class="form-group">
+            <label for="rubro">Rubro *</label>
+            <input type="text" id="rubro" placeholder="Ej: Bijouterie, Ropa, Comidas, Artesanías…" maxlength="100" required>
+          </div>
+        </div>
+
+        <!-- Datos de contacto -->
+        <div class="form-section">
+          <h2 class="form-section-title">👤 Tus Datos</h2>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="nombre_contacto">Nombre completo *</label>
+              <input type="text" id="nombre_contacto" placeholder="Tu nombre y apellido" maxlength="100" required>
+            </div>
+            <div class="form-group">
+              <label for="telefono">Teléfono / WhatsApp</label>
+              <input type="tel" id="telefono" placeholder="Ej: 11 1234-5678" maxlength="30">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" placeholder="tu@email.com" maxlength="150" required>
+          </div>
+        </div>
+
+        <!-- Contraseña -->
+        <div class="form-section">
+          <h2 class="form-section-title">🔑 Contraseña de acceso</h2>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="password">Contraseña * <span style="font-weight:400;color:var(--gray-400)">(mín. 6 caracteres)</span></label>
+              <input type="password" id="password" placeholder="••••••••" minlength="6" autocomplete="new-password" required>
+            </div>
+            <div class="form-group">
+              <label for="password_confirm">Confirmar contraseña *</label>
+              <input type="password" id="password_confirm" placeholder="••••••••" autocomplete="new-password" required>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <div id="form-error" class="form-error hidden"></div>
+          <button type="submit" class="btn btn-primary btn-lg btn-full" id="submit-btn">Crear mi cuenta</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© 2026 Feria La Camelia. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="/js/app.js"></script>
+  <script>
+    initNav();
+    fetch('/api/feriantes/check').then(r => r.json()).then(d => {
+      if (d.authenticated) window.location.href = '/mi-cuenta.html';
+    });
+
+    document.getElementById('registro-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const errDiv = document.getElementById('form-error');
+      const btn = document.getElementById('submit-btn');
+      errDiv.classList.add('hidden');
+
+      const nombre_emprendimiento = document.getElementById('nombre_emprendimiento').value.trim();
+      const rubro = document.getElementById('rubro').value.trim();
+      const nombre_contacto = document.getElementById('nombre_contacto').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const telefono = document.getElementById('telefono').value.trim();
+      const password = document.getElementById('password').value;
+      const password_confirm = document.getElementById('password_confirm').value;
+
+      if (!nombre_emprendimiento) return showErr('Ingresá el nombre del emprendimiento.');
+      if (!rubro) return showErr('Ingresá el rubro.');
+      if (!nombre_contacto) return showErr('Ingresá tu nombre completo.');
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showErr('Ingresá un email válido.');
+      if (password.length < 6) return showErr('La contraseña debe tener al menos 6 caracteres.');
+      if (password !== password_confirm) return showErr('Las contraseñas no coinciden.');
+
+      btn.disabled = true; btn.textContent = 'Creando cuenta…';
+      try {
+        const res = await fetch('/api/feriantes/registro', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ nombre_emprendimiento, rubro, nombre_contacto, email, telefono, password })
+        });
+        const data = await res.json();
+        if (data.success) { window.location.href = '/mi-cuenta.html'; }
+        else { showErr(data.error || 'Error al crear la cuenta.'); btn.disabled = false; btn.textContent = 'Crear mi cuenta'; }
+      } catch { showErr('Error de conexión. Intentá nuevamente.'); btn.disabled = false; btn.textContent = 'Crear mi cuenta'; }
+    });
+
+    function showErr(msg) {
+      const d = document.getElementById('form-error');
+      d.textContent = msg; d.classList.remove('hidden');
+      d.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  </script>
+</body>
+</html>

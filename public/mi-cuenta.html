@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Cuenta — Feria La Camelia</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Zilla+Slab:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header class="header">
+    <div class="container header-inner">
+      <a href="/" class="logo">
+        <span class="logo-icon">�</span>
+        <div class="logo-wordmark">
+          <span class="logo-feria">Feria</span>
+          <span class="logo-camelia-line">la <span class="logo-ca">Ca</span><span class="logo-melia">melia</span></span>
+        </div>
+      </a>
+      <nav class="nav" id="main-nav">
+        <a href="/" class="nav-link">Inicio</a>
+        <a href="/mi-cuenta.html" class="nav-link active" id="nav-micuenta" style="display:none">Mi Cuenta</a>
+        <button class="btn-nav-link" id="nav-logout-btn" style="display:none">Cerrar Sesión</button>
+        <a href="/registrar.html" class="nav-link" id="nav-registrarse">Registrarse</a>
+        <a href="/login.html" class="nav-link" id="nav-ingresar">Ingresar</a>
+        <a href="/admin/" class="nav-link nav-admin">Admin</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Welcome banner -->
+    <div class="welcome-section">
+      <div class="container">
+        <div class="welcome-inner">
+          <div class="welcome-avatar">🛍️</div>
+          <div>
+            <div class="welcome-title" id="welcome-nombre">Cargando…</div>
+            <div class="welcome-meta">
+              <span id="welcome-rubro"></span>
+              <span id="welcome-contacto"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container dashboard">
+
+      <!-- Ferias disponibles -->
+      <div class="dash-section">
+        <div class="dash-section-header">
+          <h2 class="dash-section-title">📅 Ferias disponibles</h2>
+        </div>
+        <div id="ferias-disponibles" class="items-list">
+          <div class="loading">Cargando fechas…</div>
+        </div>
+      </div>
+
+      <!-- Mis inscripciones -->
+      <div class="dash-section">
+        <div class="dash-section-header">
+          <h2 class="dash-section-title">✅ Mis inscripciones</h2>
+        </div>
+        <div id="mis-inscripciones" class="items-list">
+          <div class="loading">Cargando…</div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Modal éxito inscripción -->
+  <div id="modal-inscripcion" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-overlay"></div>
+    <div class="modal-content modal-inscripcion">
+      <div class="modal-success-icon">🎉</div>
+      <h2 class="modal-title">¡Se ha registrado con éxito!</h2>
+      <p class="modal-subtitle" id="modal-feria-titulo"></p>
+      <div id="modal-feria-detail" class="modal-ferias"></div>
+      <button class="btn btn-primary" onclick="cerrarModalInscripcion()">¡Entendido!</button>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© 2026 Feria La Camelia. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="/js/app.js"></script>
+  <script src="/js/mi-cuenta.js"></script>
+</body>
+</html>

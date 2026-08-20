@@ -1,0 +1,7 @@
+node_modules/
+.env
+feria.db
+feria.db-wal
+feria.db-shm
+database.js
+db-shim.js

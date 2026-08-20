@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feria La Camelia</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Zilla+Slab:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header class="header">
+    <div class="container header-inner">
+      <a href="/" class="logo">
+        <span class="logo-icon">�</span>
+        <div class="logo-wordmark">
+          <span class="logo-feria">Feria</span>
+          <span class="logo-camelia-line">la <span class="logo-ca">Ca</span><span class="logo-melia">melia</span></span>
+        </div>
+      </a>
+      <nav class="nav" id="main-nav">
+        <a href="/" class="nav-link active">Inicio</a>
+        <a href="/mi-cuenta.html" class="nav-link" id="nav-micuenta" style="display:none">Mi Cuenta</a>
+        <button class="btn-nav-link" id="nav-logout-btn" style="display:none">Cerrar Sesión</button>
+        <a href="/registrar.html" class="nav-link" id="nav-registrarse">Registrarse</a>
+        <a href="/login.html" class="nav-link" id="nav-ingresar">Ingresar</a>
+        <a href="/admin/" class="nav-link nav-admin">Admin</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <h1 class="hero-title">
+            ¡Participá en<br>
+            <span class="highlight">Feria La Camelia</span>!
+          </h1>
+          <p class="hero-subtitle">
+            Mostrá tu emprendimiento, conectá con clientes y formá parte de nuestra feria. Registrate y elegí las fechas en las que querés participar.
+          </p>
+          <div class="hero-actions">
+            <a href="/registrar.html" class="btn btn-primary btn-lg">Inscribirme ahora</a>
+            <a href="#fechas" class="btn btn-outline btn-lg">Ver fechas</a>
+          </div>
+        </div>
+        <div class="hero-visual">🛍️</div>
+      </div>
+    </section>
+
+    <!-- Próximas fechas -->
+    <section class="section" id="fechas">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">📅 Próximas Fechas</h2>
+          <p class="section-subtitle">Anotate en las ferias que más te interesen</p>
+        </div>
+
+        <div id="ferias-list" class="ferias-grid">
+          <div class="loading">Cargando fechas disponibles…</div>
+        </div>
+
+        <div class="section-cta">
+          <a href="/registrar.html" class="btn btn-primary btn-lg">Quiero inscribirme</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cómo participar -->
+    <section class="section section-alt">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">¿Cómo participar?</h2>
+          <p class="section-subtitle">Tres pasos simples para estar en la feria</p>
+        </div>
+        <div class="steps-grid">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h3 class="step-title">Completá el formulario</h3>
+            <p class="step-desc">Ingresá el nombre de tu emprendimiento, el rubro y el tipo de espacio que necesitás: tablón, perchero, o ambos.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <h3 class="step-title">Elegí las fechas</h3>
+            <p class="step-desc">Seleccioná una o varias fechas disponibles. Cada feria muestra el lugar y el precio del espacio.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <h3 class="step-title">¡Confirmado!</h3>
+            <p class="step-desc">Recibís la confirmación al instante con las recomendaciones para prepararte para el día de la feria.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© 2026 Feria La Camelia. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="/js/app.js"></script>
+  <script>
+    // Load upcoming fairs on the home page
+    loadFeriasHome();
+  </script>
+</body>
+</html>

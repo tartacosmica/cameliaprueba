@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Administrador — Feria La Camelia</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Zilla+Slab:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="admin-body">
+
+  <!-- Header -->
+  <header class="admin-header">
+    <div class="admin-header-left">
+      <a href="/" class="logo" style="font-size:1.1rem">
+        <span class="logo-icon">�</span>
+        <div class="logo-wordmark">
+          <span class="logo-feria">Feria</span>
+          <span class="logo-camelia-line">la <span class="logo-ca">Ca</span><span class="logo-melia">melia</span></span>
+        </div>
+      </a>
+      <span class="admin-badge">Admin</span>
+    </div>
+    <div style="display:flex;gap:.75rem;align-items:center">
+      <a href="/" class="btn btn-ghost btn-sm">Ver sitio</a>
+      <button class="btn btn-ghost btn-sm" id="logout-btn">Cerrar sesión</button>
+    </div>
+  </header>
+
+  <div class="admin-main">
+
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Feriantes registrados</div>
+        <div class="stat-value" id="stat-feriantes">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Ferias próximas</div>
+        <div class="stat-value" id="stat-activas">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Total de ferias</div>
+        <div class="stat-value" id="stat-total">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Inscripciones totales</div>
+        <div class="stat-value" id="stat-inscripciones">—</div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="ferias">📅 Fechas de Feria</button>
+      <button class="tab-btn" data-tab="feriantes">🧑‍💼 Feriantes</button>
+      <button class="tab-btn" data-tab="config">⚙️ Configuración</button>
+    </div>
+
+    <!-- Tab: Fechas de Feria -->
+    <div id="tab-ferias" class="tab-panel active">
+      <div class="panel-header">
+        <h2 class="panel-title">Fechas de Feria</h2>
+        <button class="btn btn-primary btn-sm" id="btn-nueva-feria">+ Nueva Fecha</button>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Lugar</th>
+              <th>Precio Espacio</th>
+              <th>Inscriptos</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="ferias-tbody">
+            <tr><td colspan="6" class="loading">Cargando…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Tab: Feriantes -->
+    <div id="tab-feriantes" class="tab-panel">
+      <div class="panel-header">
+        <h2 class="panel-title">Feriantes Registrados</h2>
+        <span id="feriantes-count" style="color:var(--gray-500);font-size:.875rem"></span>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Emprendimiento</th>
+              <th>Rubro</th>
+              <th>Espacio(s)</th>
+              <th>Necesita tablón</th>
+              <th>Contacto</th>
+              <th>Email</th>
+              <th>Teléfono</th>
+              <th>Ferias inscriptas</th>
+              <th>Registrado</th>
+            </tr>
+          </thead>
+          <tbody id="feriantes-tbody">
+            <tr><td colspan="9" class="loading">Cargando…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Tab: Configuración -->
+    <div id="tab-config" class="tab-panel">
+      <div class="panel-header">
+        <h2 class="panel-title">Configuración</h2>
+      </div>
+      <div class="form-card" style="max-width:440px;margin:0">
+        <div class="form-section">
+          <h3 class="form-section-title">🔑 Cambiar contraseña</h3>
+          <div id="pwd-msg"></div>
+          <form id="pwd-form" novalidate>
+            <div class="form-group">
+              <label for="pwd-current">Contraseña actual</label>
+              <input type="password" id="pwd-current" autocomplete="current-password" required>
+            </div>
+            <div class="form-group">
+              <label for="pwd-nueva">Nueva contraseña</label>
+              <input type="password" id="pwd-nueva" minlength="6" autocomplete="new-password" required>
+            </div>
+            <div class="form-group">
+              <label for="pwd-confirmar">Confirmar nueva contraseña</label>
+              <input type="password" id="pwd-confirmar" autocomplete="new-password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar contraseña</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── Modal: Crear / Editar Feria ─────────────────────────────── -->
+  <div id="modal-feria" class="a-modal hidden">
+    <div class="a-modal-overlay" onclick="cerrarModalFeria()"></div>
+    <div class="a-modal-content">
+      <h2 class="a-modal-title" id="modal-feria-title">Nueva Fecha de Feria</h2>
+      <form id="feria-form" novalidate>
+        <input type="hidden" id="feria-id">
+        <div class="form-group">
+          <label for="feria-fecha">Fecha *</label>
+          <input type="date" id="feria-fecha" required>
+        </div>
+        <div class="form-group">
+          <label for="feria-lugar">Lugar *</label>
+          <input type="text" id="feria-lugar" placeholder="Ej: Plaza San Martín, Salón Municipal" required maxlength="200">
+        </div>
+        <div class="form-group">
+          <label for="feria-precio">Precio del espacio ($) *</label>
+          <input type="number" id="feria-precio" placeholder="0" min="0" step="1" required>
+        </div>
+        <div class="form-group">
+          <label for="feria-recomendaciones">Recomendaciones para los feriantes *</label>
+          <textarea id="feria-recomendaciones" rows="5"
+            placeholder="Ej: Llegar a las 8 hs. Traer mantel. El montaje comienza a las 9 hs…" required maxlength="2000"></textarea>
+          <p style="font-size:.75rem;color:var(--gray-400);margin-top:.25rem">
+            Este texto se mostrará al feriante cuando se inscriba exitosamente.
+          </p>
+        </div>
+        <div class="form-group" id="activa-group" style="display:none">
+          <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;font-weight:normal">
+            <input type="checkbox" id="feria-activa" style="width:auto">
+            Fecha activa (visible para los feriantes)
+          </label>
+        </div>
+        <div id="feria-form-error" class="form-error hidden"></div>
+        <div style="display:flex;gap:.75rem;margin-top:1.5rem;justify-content:flex-end">
+          <button type="button" class="btn btn-ghost" onclick="cerrarModalFeria()">Cancelar</button>
+          <button type="submit" class="btn btn-primary" id="feria-submit-btn">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ── Modal: Ver Inscripciones ────────────────────────────────── -->
+  <div id="modal-inscripciones" class="a-modal hidden">
+    <div class="a-modal-overlay" onclick="cerrarModalInscripciones()"></div>
+    <div class="a-modal-content" style="max-width:800px">
+      <h2 class="a-modal-title" id="modal-inscripciones-title">Inscriptos</h2>
+      <div class="table-wrapper" style="margin-bottom:1rem">
+        <table>
+          <thead>
+            <tr>
+              <th>Emprendimiento</th>
+              <th>Rubro</th>
+              <th>Espacio</th>
+              <th>Necesita tablón</th>
+              <th>Contacto</th>
+              <th>Email</th>
+              <th>Teléfono</th>
+              <th>Inscripto el</th>
+            </tr>
+          </thead>
+          <tbody id="inscripciones-tbody">
+            <tr><td colspan="8" class="loading">Cargando…</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="text-align:right">
+        <button class="btn btn-ghost" onclick="cerrarModalInscripciones()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/admin/admin.js"></script>
+</body>
+</html>
