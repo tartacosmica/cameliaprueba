@@ -67,20 +67,20 @@ async function loadFerias() {
     }
     tbody.innerHTML = ferias.map(f => `
       <tr>
-        <td style="text-transform:capitalize;font-weight:600">${formatearFecha(f.fecha)}</td>
-        <td>${escHtml(f.lugar)}</td>
-        <td>${formatearPrecio(f.precio)}</td>
-        <td>
+        <td data-label="Fecha" style="text-transform:capitalize;font-weight:600">${formatearFecha(f.fecha)}</td>
+        <td data-label="Lugar">${escHtml(f.lugar)}</td>
+        <td data-label="Precio">${formatearPrecio(f.precio)}</td>
+        <td data-label="Inscriptos">
           <button class="btn btn-ghost btn-sm" onclick="verInscripciones('${f.id}', '${escHtml(f.fecha)}')">
             👥 ${f.total_inscripciones}
           </button>
         </td>
-        <td>
+        <td data-label="Estado">
           <span class="badge ${f.activa ? 'badge-active' : 'badge-inactive'}">
             ${f.activa ? 'Activa' : 'Inactiva'}
           </span>
         </td>
-        <td>
+        <td data-label="Acciones">
           <div class="btn-row">
             <button class="btn btn-ghost btn-sm btn-icon" title="Editar" onclick='abrirModalFeria(${JSON.stringify(f)})'>✏️</button>
             <button class="btn btn-danger btn-sm btn-icon" title="Eliminar" onclick="eliminarFeria('${f.id}')">🗑️</button>
@@ -196,14 +196,14 @@ async function verInscripciones(feriaId, fecha) {
 
     tbody.innerHTML = inscripciones.map(i => `
       <tr>
-        <td style="font-weight:600">${escHtml(i.nombre_emprendimiento)}</td>
-        <td>${escHtml(i.rubro)}</td>
-        <td><span class="espacio-pill">${espacioLabel(i.tipo_espacio)}</span></td>
-        <td style="text-align:center">${i.necesita_tablon ? '<span style="color:var(--success);font-weight:700">✓ Sí</span>' : '<span style="color:var(--gray-400)">—</span>'}</td>
-        <td>${escHtml(i.nombre_contacto)}</td>
-        <td><a href="mailto:${escHtml(i.email)}">${escHtml(i.email)}</a></td>
-        <td>${escHtml(i.telefono) || '—'}</td>
-        <td style="white-space:nowrap;font-size:.8rem;color:var(--gray-500)">${formatDateTime(i.created_at)}</td>
+        <td data-label="Emprendimiento" style="font-weight:600">${escHtml(i.nombre_emprendimiento)}</td>
+        <td data-label="Rubro">${escHtml(i.rubro)}</td>
+        <td data-label="Espacio"><span class="espacio-pill">${espacioLabel(i.tipo_espacio)}</span></td>
+        <td data-label="Tablón">${i.necesita_tablon ? '<span style="color:var(--success);font-weight:700">✓ Sí</span>' : '<span style="color:var(--gray-400)">—</span>'}</td>
+        <td data-label="Contacto">${escHtml(i.nombre_contacto)}</td>
+        <td data-label="Email"><a href="mailto:${escHtml(i.email)}">${escHtml(i.email)}</a></td>
+        <td data-label="Teléfono">${escHtml(i.telefono) || '—'}</td>
+        <td data-label="Inscripto" style="white-space:nowrap;font-size:.8rem;color:var(--gray-500)">${formatDateTime(i.created_at)}</td>
       </tr>
     `).join('');
   } catch {
@@ -230,15 +230,15 @@ async function loadFeriantes() {
     }
     tbody.innerHTML = feriantes.map(f => `
       <tr>
-        <td style="font-weight:600">${escHtml(f.nombre_emprendimiento)}</td>
-        <td>${escHtml(f.rubro)}</td>
-        <td>${espaciosUsadosLabel(f.espacios_usados)}</td>
-        <td style="text-align:center">${f.alguna_vez_tablon ? '<span style="color:var(--success);font-weight:700">✓ Sí</span>' : '<span style="color:var(--gray-400)">—</span>'}</td>
-        <td>${escHtml(f.nombre_contacto)}</td>
-        <td><a href="mailto:${escHtml(f.email)}">${escHtml(f.email)}</a></td>
-        <td>${escHtml(f.telefono) || '—'}</td>
-        <td style="font-size:.8rem">${f.ferias_inscriptas ? escHtml(f.ferias_inscriptas) : '—'}</td>
-        <td style="white-space:nowrap;font-size:.8rem;color:var(--gray-500)">${formatDateTime(f.created_at)}</td>
+        <td data-label="Emprendimiento" style="font-weight:600">${escHtml(f.nombre_emprendimiento)}</td>
+        <td data-label="Rubro">${escHtml(f.rubro)}</td>
+        <td data-label="Espacio(s)">${espaciosUsadosLabel(f.espacios_usados)}</td>
+        <td data-label="Tablón">${f.alguna_vez_tablon ? '<span style="color:var(--success);font-weight:700">✓ Sí</span>' : '<span style="color:var(--gray-400)">—</span>'}</td>
+        <td data-label="Contacto">${escHtml(f.nombre_contacto)}</td>
+        <td data-label="Email"><a href="mailto:${escHtml(f.email)}">${escHtml(f.email)}</a></td>
+        <td data-label="Teléfono">${escHtml(f.telefono) || '—'}</td>
+        <td data-label="Ferias" style="font-size:.8rem">${f.ferias_inscriptas ? escHtml(f.ferias_inscriptas) : '—'}</td>
+        <td data-label="Registrado" style="white-space:nowrap;font-size:.8rem;color:var(--gray-500)">${formatDateTime(f.created_at)}</td>
       </tr>
     `).join('');
   } catch {
