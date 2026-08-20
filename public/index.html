@@ -27,6 +27,9 @@
         <a href="/login.html" class="nav-link" id="nav-ingresar">Ingresar</a>
         <a href="/admin/" class="nav-link nav-admin">Admin</a>
       </nav>
+      <button class="nav-hamburger" id="nav-toggle" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </header>
 
@@ -36,36 +39,18 @@
       <div class="container">
         <div class="hero-content">
           <h1 class="hero-title">
-            ¡Participá en<br>
+            ¡Bienvenida a<br>
             <span class="highlight">Feria La Camelia</span>!
           </h1>
           <p class="hero-subtitle">
-            Mostrá tu emprendimiento, conectá con clientes y formá parte de nuestra feria. Registrate y elegí las fechas en las que querés participar.
+            Mostrá tu emprendimiento y formá parte de nuestra comunidad. Registrate para ver las fechas disponibles e inscribirte.
           </p>
           <div class="hero-actions">
-            <a href="/registrar.html" class="btn btn-primary btn-lg">Inscribirme ahora</a>
-            <a href="#fechas" class="btn btn-outline btn-lg">Ver fechas</a>
+            <a href="/registrar.html" class="btn btn-primary btn-lg" id="hero-btn-registrar">Crear mi cuenta</a>
+            <a href="/login.html" class="btn btn-outline btn-lg" id="hero-btn-ingresar">Ya tengo cuenta</a>
           </div>
         </div>
         <div class="hero-visual">🛍️</div>
-      </div>
-    </section>
-
-    <!-- Próximas fechas -->
-    <section class="section" id="fechas">
-      <div class="container">
-        <div class="section-header">
-          <h2 class="section-title">📅 Próximas Fechas</h2>
-          <p class="section-subtitle">Anotate en las ferias que más te interesen</p>
-        </div>
-
-        <div id="ferias-list" class="ferias-grid">
-          <div class="loading">Cargando fechas disponibles…</div>
-        </div>
-
-        <div class="section-cta">
-          <a href="/registrar.html" class="btn btn-primary btn-lg">Quiero inscribirme</a>
-        </div>
       </div>
     </section>
 
@@ -105,8 +90,15 @@
 
   <script src="/js/app.js"></script>
   <script>
-    // Load upcoming fairs on the home page
-    loadFeriasHome();
+    initNav();
+    // Hide hero buttons based on auth state
+    fetch('/api/feriantes/check').then(r => r.json()).then(d => {
+      if (d.authenticated) {
+        document.getElementById('hero-btn-registrar')?.setAttribute('href', '/mi-cuenta.html');
+        document.getElementById('hero-btn-registrar').textContent = 'Ver mis fechas';
+        document.getElementById('hero-btn-ingresar')?.setAttribute('style','display:none');
+      }
+    });
   </script>
 </body>
 </html>

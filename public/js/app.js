@@ -19,6 +19,14 @@ function escHtml(str) {
 // ── Auth-aware nav ────────────────────────────────────────────────────────────
 
 async function initNav() {
+  // Hamburger toggle
+  document.getElementById('nav-toggle')?.addEventListener('click', () => {
+    document.getElementById('main-nav')?.classList.toggle('nav-open');
+  });
+  // Close nav when a link is tapped on mobile
+  document.getElementById('main-nav')?.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('click', () => document.getElementById('main-nav')?.classList.remove('nav-open'));
+  });
   try {
     const { authenticated } = await fetch('/api/feriantes/check').then(r => r.json());
 

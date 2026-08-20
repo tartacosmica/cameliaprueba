@@ -827,13 +827,31 @@ body.login-body {
 /* ── Success modal (inscripcion) ─────────────────────────── */
 .modal-inscripcion .modal-rec-text { text-align: left; }
 
+/* ── Hamburger button ────────────────────────────────────── */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  padding: 7px 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background .15s;
+  flex-shrink: 0;
+}
+.nav-hamburger:hover { background: var(--primary-light); }
+.nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--gray-600); border-radius: 2px; transition: transform .2s; }
+
 /* ── Responsive dashboard ───────────────────────────────── */
 @media (max-width: 600px) {
   .feria-item-row { flex-wrap: wrap; }
   .feria-item-actions { width: 100%; }
   .welcome-title { font-size: 1.2rem; }
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .admin-main { padding: 1.25rem 1rem; }
+  .a-modal-content { padding: 1.25rem; }
 }
-
 
 @media (max-width: 768px) {
   .hero .container { grid-template-columns: 1fr; }
@@ -842,12 +860,41 @@ body.login-body {
   .radio-group { grid-template-columns: 1fr; }
   .fecha-item-content { grid-template-columns: auto 1fr; }
   .fecha-price-badge { grid-column: 1 / -1; }
-  .nav .nav-admin { display: none; }
+}
+
+@media (max-width: 640px) {
+  /* Hamburger visible, nav collapses */
+  .nav-hamburger { display: flex; }
+  #main-nav {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: .125rem;
+    order: 3;
+    border-top: 1px solid var(--gray-100);
+    padding: .5rem 0 .25rem;
+    margin-top: .5rem;
+  }
+  #main-nav.nav-open { display: flex; }
+  .header-inner { flex-wrap: wrap; height: auto; padding: .6rem 0; }
+  .nav-link, .btn-nav-link { width: 100%; text-align: left; padding: .625rem 1rem; border-radius: 8px; }
+  .nav-admin { display: none !important; }
+  .section-title { font-size: 1.4rem; }
+  .page-header h1 { font-size: 1.5rem; }
+  .espacio-checks { gap: .5rem; }
+  .espacio-selector-actions { flex-direction: column; }
+  .espacio-selector-actions .btn { width: 100%; }
 }
 
 @media (max-width: 480px) {
-  .hero { padding: 3rem 0 2.5rem; }
-  .form-card { padding: 1.25rem; }
+  .hero { padding: 2.5rem 0 2rem; }
+  .hero-title { font-size: 1.6rem; }
+  .form-card { padding: 1.25rem 1rem; }
   .hero-actions { flex-direction: column; }
   .hero-actions .btn { width: 100%; justify-content: center; }
+  .modal-content { padding: 1.5rem 1.25rem; }
+  .welcome-section { padding: 1.5rem 0; }
+  .dashboard { padding: 1.5rem 0; }
+  .container { padding: 0 1rem; }
 }
